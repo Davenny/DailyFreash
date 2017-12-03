@@ -26,4 +26,6 @@ def register_handle(request):
     user.uname = uname
     user.upwd =upwd3
     user.uemail =uemail
+    user.save()
+    return redirect('/user/login/')
 
