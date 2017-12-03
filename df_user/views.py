@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
+from hashlib import sha1
 # Create your views here.from hashlib import sha1
 from django.shortcuts import render,redirect
 from models import *
