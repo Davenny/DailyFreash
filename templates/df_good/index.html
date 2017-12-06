@@ -62,7 +62,7 @@
 			<ul class="goods_list fl">
                 {% for g in type0 %}
                     <li>
-                        <h4><a href="/{{ g.id }}">{{ g.gtitle|slice:'10' }}...</a></h4>
+                        <h4><a href="/{{ g.id }}">{{ g.gtitle|slice:'10' }}</a></h4>
                         <a href="#"><img src="{{ g.gpic.url }}"></a>
                         <div class="prize">¥ {{ g.gprice }}</div>
                     </li>
