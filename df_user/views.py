@@ -89,5 +89,5 @@ def site(request):
         user.uaddress = post.get('uyoubian')
         user.uphone = post.get('uphone')
         user.save()
-    context = {'title':'User Zone','user':user}
+    context = {'title':'User Zone','user':user,'page_name':1}
     return render(request,'df_user/user_center_site.html',context)
