@@ -47,23 +47,23 @@
 
 	<div class="list_model">
 		<div class="list_title clearfix">
-			<h3 class="fl" id="model01">新鲜水果</h3>
+            <a href="/list1_1_1"><h3 class="fl" id="model01">新鲜水果</h3></a>
 			<div class="subtitle fl">
 				<span>|</span>
                 {% for g in type01 %}
-                    <a href="/{{ g.id }}" >{{ g.gtitle|slice:'10' }}...</a>
+                    <a href="/{{ g.id }}" >{{ g.gtitle|slice:'10' }}</a>
                 {% endfor %}
 			</div>
-			<a href="#" class="goods_more fr" id="fruit_more">查看更多 ></a>
+			<a href="/list1_1_1" class="goods_more fr" id="fruit_more">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner01.jpg"></div>
+            <a href="/list1_1_1"><div class="goods_banner fl"><img src="/static/images/banner01.jpg"></div></a>
 			<ul class="goods_list fl">
                 {% for g in type0 %}
                     <li>
                         <h4><a href="/{{ g.id }}">{{ g.gtitle|slice:'10' }}</a></h4>
-                        <a href="#"><img src="{{ g.gpic.url }}"></a>
+                        <a href="/{{ g.id }}"><img src="{{ g.gpic.url }}"></a>
                         <div class="prize">¥ {{ g.gprice }}</div>
                     </li>
                 {% endfor %}
@@ -265,19 +265,6 @@
 		</div>
 	</div>
 
-	<div class="footer">
-		<div class="foot_link">
-			<a href="#">关于我们</a>
-			<span>|</span>
-			<a href="#">联系我们</a>
-			<span>|</span>
-			<a href="#">招聘人才</a>
-			<span>|</span>
-			<a href="#">友情链接</a>		
-		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
-		<p>电话：010-****888    京ICP备*******8号</p>
-	</div>
 	<script type="text/javascript" src="js/slideshow.js"></script>
 	<script type="text/javascript">
 		BCSlideshow('focuspic');
