@@ -2,6 +2,9 @@
 {% extends 'df_good/base.html' %}
 {% block head %}
     <script>
+        function tip() {
+            alert("Add it to cart successfully!");
+        }
         function add() {
             num = parseFloat($('.num_show').val());
             $('.num_show').val(num+1);
@@ -50,7 +53,7 @@
 			<div class="total" >总价：<em id="gtotal">{{ g.gprice }}元</em></div>
 			<div class="operate_btn">
 				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+				<a href="javascript:add_cart();" class="add_cart" id="add_cart" onclick="tip()">加入购物车</a>
 			</div>
 		</div>
 	</div>
@@ -82,17 +85,31 @@
 		var $to_x = $('#show_count').offset().top;
 		var $to_y = $('#show_count').offset().left;
 
-		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
-		$('#add_cart').click(function(){
-			$(".add_jump").stop().animate({
-				'left': $to_y+7,
-				'top': $to_x+7},
-				"fast", function() {
-					$(".add_jump").fadeOut('fast',function(){
-						$('#show_count').html(2);
-					});
+		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
 
-			});
-		})
+
+            function add_cart(){
+                if($(".login_btn").text().indexOf("登录")>=0){
+                    alert("请先登录后再购买");
+                    location.href = '/user/login/';
+                    return;
+                }
+                $(".add_jump").stop().animate({
+                        'left': $to_y+7,
+                        'top': $to_x+7},
+                    "fast", function() {
+                        $(".add_jump").fadeOut('fast',function(){
+                            $('#show_count').html(2);
+                        });
+
+                    });
+
+                num = parseInt($('.num_show').val());
+                $.get('/cart/add{{ g.id }}_'+num+'/',function (data) {
+                    $('#show_count').text(data.count);
+                });
+
+            }
+
 	</script>
 {% endblock details %}
