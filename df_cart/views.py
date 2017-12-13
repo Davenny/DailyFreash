@@ -56,3 +56,8 @@ def delete(request,cart_id):
     except Exception as e:
         data = {'ok':0}
     return JsonResponse(data)
+
+def cnt(request,cnt):
+    request.session['cart_cnt'] = cnt
+    data={}
+    return JsonResponse(data)

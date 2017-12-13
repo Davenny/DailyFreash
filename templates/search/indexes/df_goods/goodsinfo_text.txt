@@ -1,0 +1,4 @@
+
+{{ object.gtitle}}
+{{ object.gcontent }}
+{{ object.gjianjie }}

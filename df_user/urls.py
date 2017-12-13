@@ -9,6 +9,7 @@ urlpatterns=[
     url(r'login_handle/',views.login_handle),
     url(r'^user_center_info.html/$',views.info),
     url(r'^user_center_site.html/$',views.site),
-    url(r'^user_center_order.html/$',views.order),
+    url(r'^user_center_order.html/$',views.userOrder),
     url(r'^logout/$',views.logout),
+    url(r'order/',views.userOrder),
 ]

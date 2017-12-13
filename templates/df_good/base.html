@@ -23,18 +23,20 @@
         </ul>
     </div>
 </div>
-
+{% if need_new == 1 %}
 <div class="breadcrumb">
     <a href="#">全部分类</a>
     <span>></span>
     <a href="#">新鲜水果</a>
 </div>
+{% endif %}
 {% endblock bodytop %}
 {% block body_bottom %}
     {% block details2 %}
     {% endblock details2 %}
     <div class="main_wrap clearfix">
         <div class="l_wrap fl clearfix">
+            {% if need_new == 1 %}
             <div class="new_goods">
                 <h3>新品推荐</h3>
                 <ul>
@@ -46,7 +48,9 @@
                         </li>
                     {% endfor %}
                 </ul>
+
             </div>
+        {% endif %}
         </div>
 
          {% block details %}{% endblock details %}

@@ -10,6 +10,7 @@ from django.shortcuts import render,redirect
 from models import *
 import user_decoratoe
 from df_goods.models import *
+from df_order.models import *
 
 def register(request):
     return render(request,'df_user/register.html')
@@ -77,10 +78,6 @@ def logout(request):
     return redirect('/')
 
 
-@user_decoratoe.login
-def order(request):
-    context={'title':'User Zone'}
-    return render(request,'df_user/user_center_order.html',context)
 
 @user_decoratoe.login
 def info(request):
@@ -113,3 +110,18 @@ def site(request):
         user.save()
     context = {'title':'User Zone','user':user,'page_name':1}
     return render(request,'df_user/user_center_site.html',context)
+
+@user_decoratoe.login
+def userOrder(request):
+    user_id = request.session['user_id']
+    my_order = OrderInfo.objects.filter(user_id=user_id)
+    my_order_detail = OrderDetailInfo.objects.filter(order__in=my_order)
+    print('--------------------')
+    print(my_order_detail)
+    print(my_order)
+    context = {
+        'title':'User Zone',
+        'my_order':my_order,
+        'my_order_detail':my_order_detail,
+    }
+    return render(request,'df_user/user_center_order.html',context)

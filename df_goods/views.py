@@ -30,7 +30,8 @@ def list(request,tid,pindex,sort):
                'paginator':paginator,
                'typeinfo':typeinfo,
                'sort':sort,
-               'news':news}
+               'news':news,
+               'need_new':1,}
     return render(request,'df_good/list.html',context)
 
 def detail(request,id):
@@ -62,7 +63,6 @@ def detail(request,id):
     print(goods_ids)
     re.set_cookie('goods_ids',goods_ids)
     return re
-
 
 
 

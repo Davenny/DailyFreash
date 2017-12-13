@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block head%}
     <script>
+        function check_out() {
+            url = '/order/?a=0';
+            $(':checkbox:not(#check_all)').each(function () {
+                if($(this).prop('checked')){
+                    cart_id = $(this).parents('.cart_list_td').attr('id');
+                    url = url + '&cart_id=' + cart_id;
+                }
+            });
+           window.location.href = url;
+        }
 
         function cart_del(cart_id) {
             del = confirm('Are you sure to delete it?');
@@ -22,67 +32,69 @@
                 price = $(this).prev().prev().text();
                 total0 = parseFloat(count)*parseFloat(price);
                 $(this).text(total0.toFixed(2));
-                total1 += total0;
-                total_count += 1;
+                    total1 += total0;
+                    total_count += 1;
             });
             $('#total_price').text(total1.toFixed(2));
             $('#total_num').text(total_count);
             $('#total_count_2').text(total_count);
+            $.get('/cart/cnt'+total_count+'/',function (data) {
+            });
         }
 
-
-        $(function () {
-
-            $('.num_show').blur(function () {
-                count = $(this).val();
-                if(count <= 0){
-                    alert('Please input the right number');
-                    $(this).focus();
-                    return;
-                }else if(count>=100){
-                    alert('The amount could not beyound 100');
-                    $(this).focus();
-                    return;
+    $(function () {
+        $('.num_show').blur(function () {
+            count = $(this).val();
+            if(count <= 0){
+                alert('Please input the right number');
+                $(this).focus();
+                return;
+            }else if(count>=100){
+                alert('The amount could not beyound 100');
+                $(this).focus();
+                return;
+            }
+            cart_id = $(this).parents('.cart_list_td').attr('id');
+            $.get('/cart/edit'+cart_id+'_'+count+'/',function (data) {
+                if(data.ok == 0){
+                    total();
+                }else {
+                    $(this).val(data.ok);
                 }
-                cart_id = $(this).parents('.cart_list_td').attr('id');
-                $.get('/cart/edit'+cart_id+'_'+count+'/',function (data) {
-                    if(data.ok == 0){
-                        total();
-                    }else {
-                        $(this).val(data.ok);
-                    }
-                })
-
-            });
-
-            $('.add').click(function () {
-                txt = $(this).next();
-                txt.val(parseFloat(txt.val())+1).blur();
-            });
-
-            $('.minus').click(function () {
-                txt = $(this).prev();
-                txt.val(parseFloat(txt.val())-1).blur();
-            });
-
-            $('#check_all').click(function () {
-                state = $(this).prop('checked');
-                $(':checkbox:not(#check_all)').prop('checked',state);
-            });
-
-            $(':checkbox:not(#check_all)').click(function () {
-               if($(this).prop('checked')){
-                   if($(':checked').length+1 == $(':checkbox').length){
-                       $('#check_all').prop('checked',true);
-                   }
-               }
-               else{
-                   $('#check_all').prop('checked',false);
-               }
-            });
-            total();
+            })
 
         });
+
+        $('.add').click(function () {
+            txt = $(this).next();
+            txt.val(parseFloat(txt.val())+1).blur();
+        });
+
+        $('.minus').click(function () {
+            txt = $(this).prev();
+            txt.val(parseFloat(txt.val())-1).blur();
+        });
+
+        $('#check_all').click(function () {
+            state = $(this).prop('checked');
+            $(':checkbox:not(#check_all)').prop('checked',state);
+        });
+
+        $(':checkbox:not(#check_all)').click(function () {
+            if($(this).prop('checked')){
+                if($(':checked').length+1 == $(':checkbox').length){
+                    $('#check_all').prop('checked',true);
+                }
+            }
+            else{
+                $('#check_all').prop('checked',false);
+            }
+        });
+        total();
+
+
+    });
+
     </script>
 {% endblock head %}
 {% block bodytop %}
@@ -98,7 +110,7 @@
 
     {% for cart in carts %}
 	<ul class="cart_list_td clearfix" id="{{ cart.id }}">
-		<li class="col01"><input type="checkbox" name="" checked></li>
+		<li class="col01 buy_it"><input type="checkbox" name="" checked></li>
 		<li class="col02"><img src="{{ cart.goods.gpic.url }}"></li>
 		<li class="col03">{{ cart.goods.gtitle }}<br><em>{{ cart.goods.gprice }}/{{ cart.goods.gunit }}</em></li>
 		<li class="col04">{{ cart.goods.gunit }}</li>
@@ -119,6 +131,6 @@
 		<li class="col01"><input type="checkbox" name="" checked="" id="check_all"></li>
 		<li class="col02" >全选</li>
 		<li class="col03">合计(不含运费)：<span>¥</span><em id="total_price">42.60</em><br id="total_count">共计<b id="total_count_2">2</b>件商品</li>
-		<li class="col04"><a href="place_order.html">去结算</a></li>
+		<li class="col04"><a href="javascript:check_out()">去结算</a></li>
 	</ul>
 {% endblock bodytop %}

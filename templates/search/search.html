@@ -1,0 +1,27 @@
+{% extends 'df_good/base.html' %}
+
+{% block details %}
+    <div class="r_wrap fr clearfix">
+
+        <ul class="goods_type_list clearfix">
+            {% if query %}
+                <h2>搜索结果如下：</h2>
+                {% for g in  page.object_list %}
+                    <li>
+                        <a href="/{{ g.object.id }}/"><img src="{{ g.object.gpic.url }}"></a>
+                        <h4><a href="/{{ g.object.id }}/">{{ g.object.gtitle }}</a></h4>
+                        <div class="operate">
+                            <span class="prize">￥{{ g.object.gprice }}</span>
+                            <span class="unit">{{ g.object.gunit }}</span>
+                            <a href="/cart/add{{ g.object.id }}_1/" class="add_goods" title="加入购物车"></a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p>Object Not Found</p>
+                {% endfor %}
+            {% endif %}
+        </ul>
+
+    </div>
+
+{% endblock details %}

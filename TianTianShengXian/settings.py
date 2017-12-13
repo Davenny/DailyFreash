@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'df_user',
     'df_goods',
     'df_cart',
+    'df_order',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +135,14 @@ STATICFILES_DIRS=[
 #MEDIA_ROOT =
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+#whole search
+HAYSTACK_CONNECTIONS = {
+    'default':{
+        'ENGINE':'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH':os.path.join(BASE_DIR,'whoosh_index'),
+    }
+}
+
+#generate index
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
